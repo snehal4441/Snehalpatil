@@ -1,0 +1,701 @@
+1)	Create Database and Use It.
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+
+2)	Create Tables:
+CREATE TABLE Department (
+  DeptID INT PRIMARY KEY,
+  DeptName VARCHAR(50) NOT NULL
+);
+    CREATE TABLE Student (
+  RollNo INT PRIMARY KEY,
+  Name VARCHAR(50) NOT NULL,
+  Gender VARCHAR(10),
+  City VARCHAR(30),
+  Marks INT,
+  DeptID INT,
+  FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
+);
+
+3) Insert Records
+Insert into Department
+INSERT INTO Department VALUES
+(1, 'Computer Science'),
+(2, 'Data Science'),
+(3, 'Cyber Security');
+
+Insert into Student
+INSERT INTO Student VALUES
+(101, 'Amit Patil', 'Male', 'Pune', 78, 1),
+(102, 'Neha Sharma', 'Female', 'Mumbai', 85, 2),
+(103, 'Rohit Deshmukh', 'Male', 'Pune', 66, 1),
+(104, 'Priya Kulkarni', 'Female', 'Nashik', 91, 3),
+(105, 'Kiran Joshi', 'Male', 'Mumbai', 72, 2);
+INSERT INTO Student VALUES
+(101, 'Amit Patil', 'Male', 'Pune', 78, 1),
+(102, 'Neha Sharma', 'Female', 'Mumbai', 85, 2),
+(103, 'Rohit Deshmukh', 'Male', 'Pune', 66, 1),
+(104, 'Priya Kulkarni', 'Female', 'Nashik', 91, 3),
+(105, 'Kiran Joshi', 'Male', 'Mumbai', 72, 2);
+
+Query 1) Display all students
+SELECT * FROM Student;
+ 
+
+Query 2) Display only Name and Marks of students.
+SELECT Name, Marks FROM Student;
+ 
+
+Query 3) Display students with Marks ≥ 80
+SELECT * FROM Student
+WHERE Marks >= 80;
+ 
+
+4) Display students from Pune
+SELECT * FROM Student
+WHERE City = 'Pune';
+ 
+5) Display students sorted by Marks (Highest first)
+SELECT * FROM Student
+ORDER BY Marks DESC;
+ 
+
+6) Count total number of students
+SELECT COUNT(*) AS TotalStudents FROM Student;
+ 
+7) Find average marks of all students
+SELECT AVG(Marks) AS AverageMarks FROM Student;
+ 
+8) Find maximum and minimum marks
+SELECT MAX(Marks) AS MaxMarks, MIN(Marks) AS MinMarks FROM Student;
+ 
+9) Display department-wise student count
+SELECT DeptID, COUNT(*) AS StudentCount
+FROM Student
+GROUP BY DeptID;
+ 
+10) Display students along with Department Name (JOIN)
+SELECT s.RollNo, s.Name, s.City, s.Marks, d.DeptName
+FROM Student s
+JOIN Department d ON s.DeptID = d.DeptID
+ 
+
+11) Display students of “Data Science” department
+SELECT s.RollNo, s.Name, s.Marks, d.DeptName
+FROM Student s
+JOIN Department d ON s.DeptID = d.DeptID
+WHERE d.DeptName = 'Data Science';
+ 
+
+
+6)
+
+Step 1: Create Database
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+Step 2: Create Student Table
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Dept VARCHAR(30),
+    Marks INT,
+    City VARCHAR(30)
+);
+Step 3: Insert Sample Records
+INSERT INTO Student VALUES
+(1, 'Amit', 'CSE', 80, 'Pune'),
+(2, 'Neha', 'CSE', 90, 'Mumbai'),
+(3, 'Rohit', 'AIML', 70, 'Pune'),
+(4, 'Priya', 'CSE', 85, 'Nashik'),
+(5, 'Omkar', 'AIML', 75, 'Mumbai'),
+(6, 'Sneha', 'DSAI', 88, 'Pune'),
+(7, 'Raj', 'DSAI', 92, 'Mumbai');
+OUTPUT:
+ 
+ 
+
+ORDER BY Examples
+Example 1: Sort students by Marks (Ascending)
+SELECT * FROM Student ORDER BY Marks;
+OUTPUT:
+ 
+ 
+
+Example 2: Sort students by Marks (Descending)
+SELECT * FROM Student ORDER BY Marks DESC;
+OUTPUT:
+ 
+ 
+
+Example 3: Sort by Department then Marks
+SELECT * FROM Student ORDER BY Dept ASC, Marks DESC;
+OUTPUT:
+ 
+ 
+
+GROUP BY Examples
+Example 1: Count students department-wise
+SELECT Dept, COUNT(*) AS Total_Students FROM Student GROUP BY Dept;
+OUTPUT:
+ 
+Example 2: Average marks department-wise
+SELECT Dept, AVG(Marks) AS Average_Marks FROM Student GROUP BY Dept;
+OUTPUT:
+ 
+Example 3: Maximum marks department-wise
+SELECT Dept, MAX(Marks) AS Highest_Marks FROM Student GROUP BY Dept;
+OUTPUT:
+ 
+Example 4: City-wise total students
+SELECT City, COUNT(*) AS Total FROM Student GROUP BY City;
+OUTPUT:
+ 
+HAVING Examples
+Example 1: Departments having more than 2 students
+SELECT Dept, COUNT(*) AS Total_Students FROM Student GROUP BY Dept HAVING COUNT(*) > 2;
+OUTPUT:
+ 
+
+Example 2: Departments with average marks greater than 80
+SELECT Dept, AVG(Marks) AS Average_Marks FROM Student GROUP BY Dept HAVING AVG(Marks) > 80;
+OUTPUT:
+ 
+
+Example 3: Cities having more than 1 student
+SELECT City, COUNT(*) AS Total FROM Student GROUP BY City HAVING COUNT(*) > 1;
+OUTPUT:
+ 
+
+Combined Example (GROUP BY + HAVING + ORDER BY)
+SELECT Dept, AVG(Marks) AS Average_Marks
+FROM Student
+GROUP BY Dept
+HAVING AVG(Marks) > 75
+ORDER BY Average_Marks DESC;
+OUTPUT:
+ 
+
+8)
+
+1) Create Database and Table
+CREATE DATABASE LabDB;
+USE LabDB;
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Dept VARCHAR(30),
+    City VARCHAR(30),
+    CGPA DECIMAL(3,2),
+    Email VARCHAR(60)
+);
+INSERT INTO Student (StudentID, Name, Dept, City, CGPA, Email) VALUES
+(101,'Amit Patil','CSE','Pune',8.45,'amit101@jspm.edu'),
+(102,'Neha Joshi','CSE','Mumbai',9.10,'neha102@jspm.edu'),
+(103,'Rohit Deshmukh','AIML','Pune',7.80,'rohit103@jspm.edu'),
+(104,'Priya Kulkarni','DSAI','Nashik',8.90,'priya104@jspm.edu'),
+(105,'Omkar Shinde','CSE','Pune',7.20,'omkar105@jspm.edu');
+SELECT *FROM Student
+OUTPUT:
+ 
+ 
+3) Create Index on a Column (Dept)
+CREATE INDEX idx_dept ON Student(Dept);
+OUTPUT: 
+
+4) Create Composite Index (Dept + City)
+CREATE INDEX idx_dept_city ON Student(Dept, City);
+OUTPUT:
+ 
+5) Create Unique Index (Email)
+CREATE UNIQUE INDEX idx_unique_email ON Student(Email);
+OUTPUT:
+ 
+
+6) View Indexes
+SHOW INDEX FROM Student;
+OUTPUT:
+ 
+
+7) Performance Check Using EXPLAIN
+EXPLAIN SELECT * FROM Student WHERE Dept='CSE';
+EXPLAIN SELECT * FROM Student
+WHERE Dept='CSE' AND City='Pune';
+OUTPUT:
+ 
+
+8) Drop an Index
+DROP INDEX idx_dept ON Student;
+OUTPUT:
+
+
+
+
+9)
+
+1) Create Database & Table
+CREATE DATABASE IF NOT EXISTS msc_db;
+USE msc_db;
+
+DROP TABLE IF EXISTS student_marks;
+
+CREATE TABLE student_marks (
+  roll_no INT PRIMARY KEY,
+  name VARCHAR(50),
+  marks INT,
+  grade CHAR(2)
+);
+2) Insert Sample Data
+INSERT INTO student_marks (roll_no, name, marks, grade) VALUES
+(1, 'Amit', 92, NULL),
+(2, 'Neha', 76, NULL),
+(3, 'Ravi', 61, NULL),
+(4, 'Pooja', 48, NULL),
+(5, 'Imran', 35, NULL);
+OUTPUT:
+ 
+ 
+3) Cursor-Based Stored Procedure (Grade Assignment)
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS assign_grades $$
+
+CREATE PROCEDURE assign_grades()
+BEGIN
+    -- Variables to hold fetched values
+    DECLARE v_roll INT;
+    DECLARE v_marks INT;
+    DECLARE v_grade CHAR(2);
+
+    -- Cursor control variable
+    DECLARE done INT DEFAULT 0;
+
+    -- Declare cursor
+    DECLARE cur_students CURSOR FOR
+        SELECT roll_no, marks FROM student_marks;
+
+    -- Handler: when cursor finishes, set done = 1
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Open cursor
+    OPEN cur_students;
+
+    grade_loop: LOOP
+        -- Fetch row into variables
+        FETCH cur_students INTO v_roll, v_marks;
+
+        -- Exit loop when no more rows
+        IF done = 1 THEN
+            LEAVE grade_loop;
+        END IF;
+
+        -- Grade logic
+        IF v_marks >= 90 THEN
+            SET v_grade = 'A';
+        ELSEIF v_marks >= 75 THEN
+            SET v_grade = 'B';
+        ELSEIF v_marks >= 60 THEN
+            SET v_grade = 'C';
+        ELSEIF v_marks >= 40 THEN
+            SET v_grade = 'D';
+        ELSE
+            SET v_grade = 'F';
+        END IF;
+
+        -- Update grade
+        UPDATE student_marks
+        SET grade = v_grade
+        WHERE roll_no = v_roll;
+
+    END LOOP;
+
+    -- Close cursor
+    CLOSE cur_students;
+END $$
+
+DELIMITER ;
+OUTPUy:
+
+
+
+10)
+
+CREATE DATABASE college_db;
+USE college_db;
+
+CREATE TABLE student (
+    sid INT PRIMARY KEY,
+    sname VARCHAR(50),
+    course VARCHAR(50)
+);
+
+INSERT INTO student VALUES
+(1, 'Amit', 'BSc CS'),
+(2, 'Priya', 'BCA'),
+(3, 'Rahul', 'BTech');
+
+CREATE USER 'student_user'@'localhost' IDENTIFIED BY 'stud123';
+
+GRANT SELECT ON college_db.student TO 'student_user'@'localhost';
+FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'student_user'@'localhost';
+
+GRANT INSERT ON college_db.student TO 'student_user'@'localhost';
+REVOKE INSERT ON college_db.student FROM 'student_user'@'localhost';
+
+GRANT ALL PRIVILEGES ON college_db.* TO 'student_user'@'localhost';
+REVOKE ALL PRIVILEGES ON college_db.* FROM 'student_user'@'localhost';
+
+FLUSH PRIVILEGES;
+OUTPUT:
+ 
+
+
+
+7)
+
+
+CREATE TABLE Student (
+    id INT,
+    name VARCHAR(50),
+    marks INT,
+    dept_id INT
+);
+
+CREATE TABLE Department (
+    dept_id INT,
+    dept_name VARCHAR(50)
+);
+INSERT INTO Student VALUES
+(1, 'Neha', 85, 101),
+(2, 'Riya', 90, 102),
+(3, 'Amit', 75, 101),
+(4, 'Raj', 60, 103);
+INSERT INTO Department VALUES
+(101, 'Computer'),
+(102, 'IT'),
+(103, 'Mechanical');
+SELECT name
+FROM Student
+WHERE dept_id IN (
+    SELECT dept_id
+    FROM Department
+    WHERE dept_name = 'Computer'
+);
+OUTPUT:
+
+
+11)
+
+CREATE TABLE Employee (
+    emp_id INT,
+    emp_name VARCHAR(50),
+    salary DECIMAL(10,2),
+    department VARCHAR(50)
+);
+
+-- Create Log table
+CREATE TABLE Employee_Log (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    emp_id INT,
+    action_performed VARCHAR(20),
+    action_time DATETIME
+);
+
+-- Create Trigger
+DELIMITER $$
+
+CREATE TRIGGER emp_after_insert
+AFTER INSERT ON Employee
+FOR EACH ROW
+BEGIN
+    INSERT INTO Employee_Log(emp_id, action_performed, action_time)
+    VALUES (NEW.emp_id, 'INSERT', NOW());
+END$$
+
+DELIMITER ;
+
+-- Insert data (this will fire trigger)
+INSERT INTO Employee VALUES (1, 'Rahul Sharma', 50000, 'HR');
+
+OUTPUT:
+
+12)
+
+ CREATE DATABASE IF NOT EXISTS HotelManagementDB;
+USE HotelManagementDB;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS rooms;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS staff;
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    address TEXT,
+    id_proof VARCHAR(50)
+);
+CREATE TABLE rooms (
+    room_id INT PRIMARY KEY,
+    room_number VARCHAR(10),
+    room_type VARCHAR(30),
+    price_per_night DECIMAL(10,2),
+    status VARCHAR(20)
+);
+CREATE TABLE bookings (
+    booking_id INT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    check_in DATE,
+    check_out DATE,
+    total_amount DECIMAL(10,2),
+    booking_status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY,
+    booking_id INT,
+    payment_date DATE,
+    amount DECIMAL(10,2),
+    payment_method VARCHAR(30),
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+);
+CREATE TABLE staff (
+    staff_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    role VARCHAR(50),
+    phone VARCHAR(15),
+    salary DECIMAL(10,2)
+);
+-- Staff
+INSERT INTO staff VALUES 
+(101, 'Amit Verma', 'Manager', '9876543210', 45000.00);
+
+-- Room
+INSERT INTO rooms VALUES 
+(201, 'A-101', 'Deluxe', 3500.00, 'Available');
+
+-- Customer
+INSERT INTO customers VALUES 
+(1, 'Rahul', 'Sharma', 'Mumbai, India', 'Aadhar1234');
+
+-- Booking
+INSERT INTO bookings VALUES 
+(501, 1, 201, '2026-04-10', '2026-04-12', 7000.00, 'Confirmed');
+
+-- Payment
+INSERT INTO payments VALUES 
+(901, 501, '2026-04-10', 7000.00, 'Credit Card');
+SELECT 
+    b.booking_id,
+    c.first_name,
+    r.room_number,
+    b.total_amount
+FROM bookings b
+JOIN customers c ON b.customer_id = c.customer_id
+JOIN rooms r ON b.room_id = r.room_id;
+OUTPUT:
+ 
+
+
+
+13)
+
+CREATE DATABASE IF NOT EXISTS UniversityDB;
+USE UniversityDB;
+DROP TABLE IF EXISTS Enrollment;
+DROP TABLE IF EXISTS Course;
+DROP TABLE IF EXISTS Faculty;
+DROP TABLE IF EXISTS Student;
+DROP TABLE IF EXISTS Department;
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    dept_name VARCHAR(100) NOT NULL
+);
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+CREATE TABLE Faculty (
+    faculty_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+CREATE TABLE Course (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100),
+    credits INT,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+CREATE TABLE Enrollment (
+    enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    grade CHAR(2),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
+);
+-- Departments
+INSERT INTO Department (dept_name) VALUES
+('Computer Science'),
+('Mechanical'),
+('Civil');
+
+-- Students
+INSERT INTO Student (first_name, last_name, email, phone, dept_id) VALUES
+('Amit', 'Patil', 'amit@gmail.com', '9876543210', 1),
+('Neha', 'Sharma', 'neha@gmail.com', '9876501234', 2);
+
+-- Faculty
+INSERT INTO Faculty (name, email, phone, dept_id) VALUES
+('Dr. Rao', 'rao@gmail.com', '9999999999', 1),
+('Dr. Mehta', 'mehta@gmail.com', '8888888888', 2);
+
+-- Courses
+INSERT INTO Course (course_name, credits, dept_id) VALUES
+('DBMS', 4, 1),
+('Thermodynamics', 3, 2);
+
+-- Enrollment
+INSERT INTO Enrollment (student_id, course_id, enrollment_date, grade) VALUES
+(1, 1, '2026-04-01', 'A'),
+(2, 2, '2026-04-02', 'B');
+SELECT * FROM Student;
+SELECT 
+    s.first_name, 
+    s.last_name, 
+    d.dept_name
+FROM Student s
+JOIN Department d 
+ON s.dept_id = d.dept_id;
+SELECT 
+    s.first_name, 
+    c.course_name, 
+    e.enrollment_date, 
+    e.grade
+FROM Enrollment e
+JOIN Student s 
+ON e.student_id = s.student_id
+JOIN Course c 
+ON e.course_id = c.course_id;
+OUTPUT:
+
+
+
+
+14)
+
+CREATE DATABASE IF NOT EXISTS EcommerceDB;
+USE EcommerceDB;
+DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS Order_Items;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Customers;
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    address VARCHAR(255)
+);
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10,2),
+    stock INT
+);
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10,2),
+    order_status VARCHAR(50),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+CREATE TABLE Order_Items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+CREATE TABLE Payments (
+    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    payment_date DATE,
+    amount DECIMAL(10,2),
+    payment_method VARCHAR(50),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+);
+-- Customers
+INSERT INTO Customers (first_name, last_name, email, phone, address) VALUES
+('Amit', 'Patil', 'amit@gmail.com', '9876543210', 'Pune'),
+('Neha', 'Sharma', 'neha@gmail.com', '9876501234', 'Mumbai');
+
+-- Products
+INSERT INTO Products (product_name, category, price, stock) VALUES
+('Laptop', 'Electronics', 60000, 10),
+('Mobile', 'Electronics', 20000, 20),
+('Shoes', 'Fashion', 2000, 50);
+
+-- Orders
+INSERT INTO Orders (customer_id, order_date, total_amount, order_status) VALUES
+(1, '2026-04-01', 60000, 'Delivered'),
+(2, '2026-04-02', 20000, 'Pending');
+
+-- Order Items
+INSERT INTO Order_Items (order_id, product_id, quantity, price) VALUES
+(1, 1, 1, 60000),
+(2, 2, 1, 20000);
+
+-- Payments
+INSERT INTO Payments (order_id, payment_date, amount, payment_method) VALUES
+(1, '2026-04-01', 60000, 'UPI'),
+(2, '2026-04-02', 20000, 'Card');
+SELECT * FROM Customers;
+SELECT 
+    c.first_name, 
+    c.last_name, 
+    o.order_id, 
+    o.total_amount, 
+    o.order_status
+FROM Customers c
+JOIN Orders o 
+ON c.customer_id = o.customer_id;
+SELECT 
+    o.order_id, 
+    p.product_name, 
+    oi.quantity, 
+    oi.price
+FROM Order_Items oi
+JOIN Orders o 
+ON oi.order_id = o.order_id
+JOIN Products p 
+ON oi.product_id = p.product_id;
+SELECT 
+    o.order_id, 
+    p.amount, 
+    p.payment_method
+FROM Payments p
+JOIN Orders o 
+ON p.order_id = o.order_id;
+
+OUTPUT:
+ 
